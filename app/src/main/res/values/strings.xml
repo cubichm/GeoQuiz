@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">GeoQuiz</string>
+
+    <string name="Question_ocean">Question 1</string>
+    <string name="Question_Mideast">Question 2</string>
+    <string name="Question_africa">Question 3</string>
+
+    <string name="Question_america">Question 4</string>
+    <string name="Question_asia">Question 5</string>
+</resources>

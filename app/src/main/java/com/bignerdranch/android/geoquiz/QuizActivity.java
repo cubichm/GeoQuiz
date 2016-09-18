@@ -11,10 +11,9 @@ import android.widget.Toast;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private ImageButton mpreButton;
     private Button mB1;
     private Button mB2;
-    private ImageButton mNextButton;
+    private Button mNextButton;
     private TextView mQuestionTextView;
 
     private static final String TAG="MainActivity";
@@ -64,42 +63,10 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-        Log.d(TAG,"onCreate called.");
+        Log.d(TAG, "onCreate called.");
 
         mQuestionTextView= (TextView)findViewById(R.id.ques);
         updateQuestion();
-        mB1 = (Button) findViewById(R.id.true_button);
-        mB2 = (Button) findViewById(R.id.false_button);
-
-        mNextButton = (ImageButton) findViewById(R.id.next_button);
-        mNextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mCurrentIndex =(mCurrentIndex + 1)% mQuesArray.length; // (0 +5)%5 = 1
-                updateQuestion();
-
-            }
-
-        });
-
-        mpreButton = (ImageButton) findViewById(R.id.pre_button);
-        mpreButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mCurrentIndex = (mCurrentIndex - 1) % mQuesArray.length;
-                Log.d(TAG, "mCurrentIndex value " + mCurrentIndex);
-                //(0-1)%5=-1
-                if (mCurrentIndex < 0) {
-                    Log.d(TAG, "mCurrentIndex value in check " + mCurrentIndex);
-                    mCurrentIndex = 4;
-                }
-                updateQuestion();
-
-            }
-
-        });
         mB1 = (Button) findViewById(R.id.true_button);
         mB1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,9 +75,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-
-
-        //mB2=(Button)findViewById(R.id.B1);
+        mB2 = (Button) findViewById(R.id.false_button);
         mB2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,20 +83,34 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+
+        mNextButton = (Button) findViewById(R.id.next_button);
+        mNextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mCurrentIndex =(mCurrentIndex + 1)% mQuesArray.length; // (0 +5)%5 = 1
+                updateQuestion();
+
+            }
+        });
+
+        if(savedInstanceState!=null)
+        {
+            mCurrentIndex=savedInstanceState.getInt(KEY_INDEX,0);
+        }
+        updateQuestion();
     }
+        @Override
         public void onSaveInstanceState(Bundle savedInstanceState){
             super.onSaveInstanceState(savedInstanceState);
             savedInstanceState.putInt(KEY_INDEX, mCurrentIndex);
 
-            if(savedInstanceState!=null)
-            {
-                mCurrentIndex=savedInstanceState.getInt(KEY_INDEX,0);
-            }
 
-            mQuestionTextView = (TextView)findViewById(R.id.ques);
-            updateQuestion();
+//            mQuestionTextView = (TextView)findViewById(R.id.ques);
+  //          updateQuestion();
 
-            mB1 = (Button) findViewById(R.id.true_button);
+/*            mB1 = (Button) findViewById(R.id.true_button);
             mB1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,7 +126,7 @@ public class QuizActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     checkAns(false);
                 }
-            });
+            });*/
         }
 
     public void checkAns(boolean uP){
